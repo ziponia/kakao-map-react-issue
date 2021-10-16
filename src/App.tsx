@@ -23,13 +23,13 @@ function App() {
       <Map
         center={{ lat: center.mapY, lng: center.mapX }}
         style={{ width: "100%", height: "360px" }}
-        onIdle={(e) => {
-          const center = e.getCenter() as any;
-          setCenter({
-            ...center,
-            mapX: center.La,
-            mapY: center.Ma,
-          });
+        onIdle={(mao) => {
+          const mapCenter = mao.getCenter() as kakao.maps.LatLng;
+          setCenter((prev) => ({
+            ...prev,
+            mapX: mapCenter.getLng(),
+            mapY: mapCenter.getLat(),
+          }));
         }}
       >
         <Circle
