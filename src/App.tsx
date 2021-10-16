@@ -9,7 +9,7 @@ function App() {
   const [center, setCenter] = React.useState({
     mapX: 128.6142847,
     mapY: 36.0345423,
-    radius: 10000,
+    radius: 200,
   });
   const call = async (center: any) => {
     // ...TODO API
@@ -24,16 +24,17 @@ function App() {
         center={{ lat: center.mapY, lng: center.mapX }}
         style={{ width: "100%", height: "360px" }}
         onIdle={(e) => {
-          const center = e.getCenter() as any;
-          setCenter({
-            ...center,
-            mapX: center.La,
-            mapY: center.Ma,
-          });
+          const getCenter = e.getCenter();
+          setCenter((prev) => ({
+            ...prev,
+            mapX: getCenter.getLng(),
+            mapY: getCenter.getLat(),
+          }));
         }}
       >
         <Circle
           center={{
+            // state 가 변경 될 때, center 좌표가 변경되지 않음
             lng: center.mapX,
             lat: center.mapY,
           }}
